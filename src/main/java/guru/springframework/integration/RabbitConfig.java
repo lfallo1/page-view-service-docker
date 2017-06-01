@@ -51,14 +51,14 @@ public class RabbitConfig {
 
     @Bean
     public AmqpInboundChannelAdapter amqpInboundChannelAdapterPageView(SimpleMessageListenerContainer listenerContainer,
-                                                        @Qualifier("amqpInputChannel") MessageChannel inboundChannel) {
+                                                        @Qualifier(AMQP_CHANNEL) MessageChannel inboundChannel) {
         AmqpInboundChannelAdapter adapter = new AmqpInboundChannelAdapter(listenerContainer);
         adapter.setOutputChannel(inboundChannel);
         return adapter;
     }
 
     @Bean
-    @ServiceActivator(inputChannel = "amqpInputChannel")
+    @ServiceActivator(inputChannel = AMQP_CHANNEL)
     public MessageHandler pageViewMessageHandler(PageViewsRepository repository) {
         return new MessageHandler() {
             @Override
